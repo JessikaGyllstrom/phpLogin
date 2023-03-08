@@ -24,48 +24,64 @@
             <?php
                 session_start();
                 $validInput = false;
-                // when form is submitted
+                //when form is submitted
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (!empty($_POST['password']) && (!empty($_POST['username']))) {
-                        echo "EEEECHO";
                         $password = $_POST['password'];
                         $username = $_POST['username'];
-                        if (isset($_POST['saveuser'])) {
-                            addUser($username, $password);
-                        }
-                        // set variable to true
+                        //set variable to true
                         $validInput = true;
                     } else {
-                        echo "Please provide a username and password";
+                        echo "Please provide username and password";
                     }
+                    //fetch the file into a string
                     $file = file_get_contents('testfile.txt');
-
-
-                    // login
-                    // if user clicks login and values are provided in fields for username and password
-                    if (isset($_POST['login']) & (!empty($_POST['username'])) & (!empty($_POST['password']))) {
-                        //check if username already exists in file
+                    //if user clicked on saveuser button
+                    if (isset($_POST['saveuser'])) {
+                        //check if username already exists
                         if (strpos($file, $username)) {
-                            echo $username;
-                            echo $password;
-                            echo 'user found!!';
-
+                            echo "Username already taken!";
+                            echo "<br>";
+                            echo "Please choose another";
+                        } //if user doesnt already exist
+                        else {
+                            //call function to add user with parameters username and password
+                            addUser($username, $password);
+                        }
+                    }
+                    //login
+                    //if user clicks login and values are provided in fields for username and password
+                    if (isset($_POST['login']) & (!empty($_POST['username'])) & (!empty($_POST['password']))) {
+                        //check if username already exists
+                        if (strpos($file, $username)) {
                             //check if password matches
                             $lines = file('testfile.txt');
                             // loop through array
                             foreach ($lines as $line_num => $line) {
+                                //split every string seperated by :
                                 $str = (explode(":", $line));
-                                if ($str[1] == $password) {
-                                    echo "passssssSSeeedessss:!!!! ";
+                                //check if the hashed passwordstring matches given password
+                                $isCorrectPassword = password_verify($password, $str[1]);
+                                //if valid password
+                                if ($isCorrectPassword) {
+                                    if ($str[0] == $username) {
+                                    }
+                                    //if password or username isnt a match
+                                    else {
+                                        echo "Wrong username or password";
+                                        echo "<br>";
+                                        echo "Please try again";
+                                    }
                                 }
                             }
                         }
                     }
                 }
             function addUser($username, $password) {
+                $hash = password_hash($password, PASSWORD_DEFAULT);
                 $file = fopen("testfile.txt", "append") or
                 die("File does not exist or you lack permission to open it");
-                fputs($file, "\n$username:$password:");
+                fputs($file, "\n$username:$hash:");
                 echo "Success! New user created!";
             }
             ?>

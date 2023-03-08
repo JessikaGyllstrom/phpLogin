@@ -1,3 +1,8 @@
 
 namn:pass:
 jaha:haha:
+namn:pass:
+new:new:
+okey:$2y$10$bHQzkM1nEvDdhxkUJRpiz.j9RzCwg1H5cbQYGrNagcjPZhkdo9I8a:
+khal:$2y$10$KNr0Osj60s4HvWjah/Xc1.QCxE1dyfDA6XLkEoQ6jqS4fazhKhp0e:
+marwin:$2y$10$zqVaOEABbHCtkzIA8cXoo.a813L5Cd.w0A49YEDhsZQVimtnEg.je:
