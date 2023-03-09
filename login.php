@@ -59,8 +59,8 @@
                     $isCorrectPassword = password_verify($password, $str[1]);
                     //if valid password
                     if ($isCorrectPassword) {
-                        echo "correct password";
-                        if($str[0] == $username){
+                        //make a caseinsensitive compare
+                        if (strcasecmp($username, $str[0]) == 0) {
                             echo "correct user";
                             session_start();
                             // store the username of the current session
@@ -70,16 +70,6 @@
                             header('Location: index.php');
                             exit();
                         }
-
-                        /*
-                        session_start();
-                        // store the username of the current session
-                        $_SESSION['username'] = $username;
-                        echo $username;
-                        // redirect to index.php
-                        header('Location: index.php');
-                        exit();
-                        */
                     }
                     else {
                         $notValid = true;
