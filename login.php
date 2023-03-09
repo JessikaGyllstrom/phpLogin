@@ -11,7 +11,7 @@
     <div class="container">
         <div class="wrapper">
             <!-- form using the HTTP POST method to send the data -->
-            <form method="post">
+            <form method="POST">
                 <label for="username"></label>
                 <input id="username" name='username' class="input" type="text" placeholder="Name">
                 <label for="password"></label>
@@ -22,10 +22,11 @@
         </div>
         <div>
             <?php
-                session_start();
-                $validInput = false;
-                //when form is submitted
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            session_start();
+            $validInput = false;
+            $loggedIn = false;
+            //when form is submitted
+                if(isset($_POST['login'])) {
                     if (!empty($_POST['password']) && (!empty($_POST['username']))) {
                         $password = $_POST['password'];
                         $username = $_POST['username'];
@@ -54,6 +55,9 @@
                     if (isset($_POST['login']) & (!empty($_POST['username'])) & (!empty($_POST['password']))) {
                         //check if username already exists
                         if (strpos($file, $username)) {
+                            echo $username;
+                            echo $password;
+                            echo 'user found!!';
                             //check if password matches
                             $lines = file('testfile.txt');
                             // loop through array
@@ -64,7 +68,15 @@
                                 $isCorrectPassword = password_verify($password, $str[1]);
                                 //if valid password
                                 if ($isCorrectPassword) {
-                                    if ($str[0] == $username) {
+                                    if ($str[0] == $username)  {
+                                        $loggedIn = true;
+                                        if ($loggedIn) {
+                                            // store the username of the current session
+                                            $_SESSION['username'] = $username;
+                                            // redirect to index.php
+                                            header('Location: index.php');
+                                            exit();
+                                        }
                                     }
                                     //if password or username isnt a match
                                     else {

@@ -10,17 +10,11 @@
     <body>
     <div class="wrapper">
         <?php
-            session_start();
+        session_start();
             //check if username has a value
-            if (isset($_SESSION['username']) && isset($_SESSION['pass'])      ) {
                 echo "<h1>Welcome " . $_SESSION["username"] . "<br></h1>";
                 echo "<h4>You are logged in!</h4>";
-            }
-            else {
-                // if no value in username, redirect to log in
-                header('Location: login.php');
-                exit;
-            }
+                echo  $_SESSION["loggedin"];
         ?>
         <form method="post">
             <input name="logout" type="submit" class="submitbtn" value="logout">
@@ -28,6 +22,9 @@
         <?php
             if(isset($_POST["logout"]))
             {
+                // redirect to index.php
+                header('Location: login.php');
+                exit();
                 destroy_session_and_data();
         }
         function destroy_session_and_data()
