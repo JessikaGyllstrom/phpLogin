@@ -1,12 +1,4 @@
 
-namn:pass:
-jaha:haha:
-namn:pass:
-new:new:
-okey:$2y$10$bHQzkM1nEvDdhxkUJRpiz.j9RzCwg1H5cbQYGrNagcjPZhkdo9I8a:
-khal:$2y$10$KNr0Osj60s4HvWjah/Xc1.QCxE1dyfDA6XLkEoQ6jqS4fazhKhp0e:
-marwin:$2y$10$zqVaOEABbHCtkzIA8cXoo.a813L5Cd.w0A49YEDhsZQVimtnEg.je:
-bumbi:$2y$10$6Gbk3D7pb7rgn1xsH5BLu.CbsQmteoNIMK9KhpNak6wykj352W6Wq:
-aa:$2y$10$gdZxbRATxu7dZPQ8FTIkh.yqRiijTp86.AvlkQ1HqAYWmG72MNdfq:
-:$2y$10$F.RcmxqmkU8WYydRcjN4.uZGcUMkB5XgOu19nBXeSy5L0AO7Gz6lS:
-xx:$2y$10$YuIiINiAAej25QGSGJ6HJuSeJUmSr0qLk7mIOhvQgeqtojh3BzDi2:
+up:$2y$10$VuAY4WfHzZaavtItDx2YquCjapUB7Kvo8U7GzuDb5H/lDqEwNZMK2:
+oo:$2y$10$mwgKo3YBZekhpAcArMeVUet4mU7bBfuo4Mp9KT723NzFuLzf8pn4W:
+bb:$2y$10$crY7X1CvIpwOKj.AirABNunQewufbyCpfTNFjQpgzrKDCjLNUJx9C:

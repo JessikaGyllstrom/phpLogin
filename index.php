@@ -11,10 +11,8 @@
     <div class="wrapper">
         <?php
         session_start();
-            //check if username has a value
                 echo "<h1>Welcome " . $_SESSION["username"] . "<br></h1>";
                 echo "<h4>You are logged in!</h4>";
-                echo  $_SESSION["loggedin"];
         ?>
         <form method="post">
             <input name="logout" type="submit" class="submitbtn" value="logout">
@@ -24,8 +22,8 @@
             {
                 // redirect to index.php
                 header('Location: login.php');
-                exit();
                 destroy_session_and_data();
+                exit();
         }
         function destroy_session_and_data()
         {

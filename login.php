@@ -15,80 +15,83 @@
                 <label for="username"></label>
                 <input id="username" name='username' class="input" type="text" placeholder="Name">
                 <label for="password"></label>
-                <input id="password" name='password' class="input" type="text" placeholder="Password">
+                <input id="password" name='password' class="input" type="password" placeholder="Password">
                 <input name="login" type="submit" class="submitbtn" value="login">
-                <input name="saveuser" type="submit" class="submitbtn" value="save user">
+                <input name="register" type="submit" class="submitbtn" value="save user">
             </form>
         </div>
         <div>
             <?php
-            session_start();
-            $validInput = false;
-            $loggedIn = false;
+            $notValid = false;
             //when form is submitted
-                if(isset($_POST['login'])) {
-                    if (!empty($_POST['password']) && (!empty($_POST['username']))) {
-                        $password = $_POST['password'];
-                        $username = $_POST['username'];
-                        //set variable to true
-                        $validInput = true;
-                    } else {
-                        echo "Please provide username and password";
-                    }
+            if(!empty($_POST['password']) && !empty($_POST['username'])) {
+                    $password = $_POST['password'];
+                    $username = $_POST['username'];
+                    //set variable to true
+                    $validInput = true;
                     //fetch the file into a string
                     $file = file_get_contents('testfile.txt');
-                    //if user clicked on saveuser button
-                    if (isset($_POST['saveuser'])) {
+                    //if user clicked on register button
+                    if(isset($_POST['register'])) {
                         //check if username already exists
                         if (strpos($file, $username)) {
                             echo "Username already taken!";
                             echo "<br>";
                             echo "Please choose another";
-                        } //if user doesnt already exist
+                        }//if user doesn't already exist
                         else {
-                            //call function to add user with parameters username and password
+                            //call on function to add user with parameters username and password
                             addUser($username, $password);
                         }
                     }
-                    //login
-                    //if user clicks login and values are provided in fields for username and password
-                    if (isset($_POST['login']) & (!empty($_POST['username'])) & (!empty($_POST['password']))) {
-                        //check if username already exists
-                        if (strpos($file, $username)) {
+
+                      } else {
+                    echo "Please provide username and password";
+            }
+            if (isset($_POST['login'])) {
+                //check if password matches
+                $lines = file('testfile.txt');
+                //loop through array
+                foreach ($lines as $line_num => $line) {
+                    //split every string seperated by :
+                    $str = (explode(":", $line));
+                    //check if the hashed password-string matches given password
+                    $isCorrectPassword = password_verify($password, $str[1]);
+                    //if valid password
+                    if ($isCorrectPassword) {
+                        echo "correct password";
+                        if($str[0] == $username){
+                            echo "correct user";
+                            session_start();
+                            // store the username of the current session
+                            $_SESSION['username'] = $username;
                             echo $username;
-                            echo $password;
-                            echo 'user found!!';
-                            //check if password matches
-                            $lines = file('testfile.txt');
-                            // loop through array
-                            foreach ($lines as $line_num => $line) {
-                                //split every string seperated by :
-                                $str = (explode(":", $line));
-                                //check if the hashed passwordstring matches given password
-                                $isCorrectPassword = password_verify($password, $str[1]);
-                                //if valid password
-                                if ($isCorrectPassword) {
-                                    if ($str[0] == $username)  {
-                                        $loggedIn = true;
-                                        if ($loggedIn) {
-                                            // store the username of the current session
-                                            $_SESSION['username'] = $username;
-                                            // redirect to index.php
-                                            header('Location: index.php');
-                                            exit();
-                                        }
-                                    }
-                                    //if password or username isnt a match
-                                    else {
-                                        echo "Wrong username or password";
-                                        echo "<br>";
-                                        echo "Please try again";
-                                    }
-                                }
-                            }
+                            // redirect to index.php
+                            header('Location: index.php');
+                            exit();
                         }
+
+                        /*
+                        session_start();
+                        // store the username of the current session
+                        $_SESSION['username'] = $username;
+                        echo $username;
+                        // redirect to index.php
+                        header('Location: index.php');
+                        exit();
+                        */
+                    }
+                    else {
+                        $notValid = true;
                     }
                 }
+            }
+                //if password or username isn't a match
+                    if($notValid) {
+                        echo "Wrong username or password";
+                        echo "<br>";
+                        echo "Please try again";
+            }
             function addUser($username, $password) {
                 $hash = password_hash($password, PASSWORD_DEFAULT);
                 $file = fopen("testfile.txt", "append") or
